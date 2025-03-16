@@ -18,4 +18,14 @@ public class DtoMapper {
                 .userId(notificationPreference.getUserId())
                 .build();
     }
+
+    public static NotificationResponse fromNotification(Notification notification) {
+        return NotificationResponse
+                .builder()
+                .body(notification.getBody())
+                .createdOn(notification.getCreatedOn())
+                .status(notification.getStatus())
+                .subject(notification.getSubject())
+                .build();
+    }
 }

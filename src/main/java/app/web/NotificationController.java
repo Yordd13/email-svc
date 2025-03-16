@@ -47,9 +47,11 @@ public class NotificationController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> sendNotification(@RequestBody NotificationRequest request) {
+    public ResponseEntity<NotificationResponse> sendNotification(@RequestBody NotificationRequest request) {
         Notification notification = notificationService.sendNotification(request);
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        NotificationResponse response = DtoMapper.fromNotification(notification);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }
