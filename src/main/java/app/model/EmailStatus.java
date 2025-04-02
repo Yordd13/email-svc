@@ -1,5 +1,5 @@
 package app.model;
 
-public enum NotificationStatus {
+public enum EmailStatus {
     SUCCEEDED,FAILED
 }

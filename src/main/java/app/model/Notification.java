@@ -30,7 +30,7 @@ public class Notification {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private NotificationStatus status;
+    private EmailStatus status;
 
     private UUID userId;
 }

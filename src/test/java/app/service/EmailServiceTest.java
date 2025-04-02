@@ -2,7 +2,7 @@ package app.service;
 
 import app.model.Notification;
 import app.model.NotificationPreference;
-import app.model.NotificationStatus;
+import app.model.EmailStatus;
 import app.repository.NotificationPreferenceRepository;
 import app.repository.NotificationRepository;
 import app.web.dto.NotificationRequest;
@@ -26,7 +26,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class NotificationServiceTest {
+public class EmailServiceTest {
 
     @Mock
     private NotificationPreferenceRepository preferenceRepository;
@@ -36,7 +36,7 @@ public class NotificationServiceTest {
     private MailSender mailSender;
 
     @InjectMocks
-    private NotificationService notificationService;
+    private EmailService notificationService;
 
     @Test
     void givenExistingPreference_whenUpsertPreference_thenUpdateExistingPreference() {
@@ -155,7 +155,7 @@ public class NotificationServiceTest {
                 .subject("Test Subject")
                 .body("Test Body")
                 .createdOn(LocalDateTime.now())
-                .status(NotificationStatus.SUCCEEDED)
+                .status(EmailStatus.SUCCEEDED)
                 .build();
 
         when(preferenceRepository.findByUserId(userId)).thenReturn(Optional.of(preference));
@@ -168,7 +168,7 @@ public class NotificationServiceTest {
 
         // Then
         assertNotNull(result);
-        assertEquals(NotificationStatus.SUCCEEDED, result.getStatus());
+        assertEquals(EmailStatus.SUCCEEDED, result.getStatus());
         verify(mailSender).send(any(SimpleMailMessage.class));
 
     }
@@ -223,7 +223,7 @@ public class NotificationServiceTest {
                 .subject("Test Subject")
                 .body("Test Body")
                 .createdOn(LocalDateTime.now())
-                .status(NotificationStatus.FAILED)
+                .status(EmailStatus.FAILED)
                 .build();
 
         when(preferenceRepository.findByUserId(userId)).thenReturn(Optional.of(preference));
@@ -237,7 +237,7 @@ public class NotificationServiceTest {
 
         // Then
         assertNotNull(result);
-        assertEquals(NotificationStatus.FAILED, result.getStatus());
+        assertEquals(EmailStatus.FAILED, result.getStatus());
         verify(mailSender).send(any(SimpleMailMessage.class));
 
     }

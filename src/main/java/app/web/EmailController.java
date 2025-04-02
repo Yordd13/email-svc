@@ -2,7 +2,7 @@ package app.web;
 
 import app.model.Notification;
 import app.model.NotificationPreference;
-import app.service.NotificationService;
+import app.service.EmailService;
 import app.web.dto.NotificationPreferenceResponse;
 import app.web.dto.NotificationRequest;
 import app.web.dto.NotificationResponse;
@@ -17,19 +17,19 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/notifications")
-public class NotificationController {
+public class EmailController {
 
-    private final NotificationService notificationService;
+    private final EmailService emailService;
 
     @Autowired
-    public NotificationController(NotificationService notificationService) {
-        this.notificationService = notificationService;
+    public EmailController(EmailService notificationService) {
+        this.emailService = notificationService;
     }
 
     @PostMapping("/preferences")
     public ResponseEntity<NotificationPreferenceResponse> upsertPreference(@RequestBody UpsertNotificationPreference preference) {
 
-        NotificationPreference notificationPreference =  notificationService.upsertPreference(preference);
+        NotificationPreference notificationPreference =  emailService.upsertPreference(preference);
 
         NotificationPreferenceResponse response = DtoMapper.fromNotificationPreference(notificationPreference);
 
@@ -39,7 +39,7 @@ public class NotificationController {
     @GetMapping("/preferences")
     public ResponseEntity<NotificationPreferenceResponse> getUserPreference(@RequestParam(name = "userId") UUID userId) {
 
-        NotificationPreference notificationPreference = notificationService.getPreferenceByUserId(userId);
+        NotificationPreference notificationPreference = emailService.getPreferenceByUserId(userId);
 
         NotificationPreferenceResponse response = DtoMapper.fromNotificationPreference(notificationPreference);
 
@@ -48,7 +48,7 @@ public class NotificationController {
 
     @PostMapping
     public ResponseEntity<NotificationResponse> sendNotification(@RequestBody NotificationRequest request) {
-        Notification notification = notificationService.sendNotification(request);
+        Notification notification = emailService.sendNotification(request);
 
         NotificationResponse response = DtoMapper.fromNotification(notification);
 

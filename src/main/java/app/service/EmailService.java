@@ -2,7 +2,7 @@ package app.service;
 
 import app.model.Notification;
 import app.model.NotificationPreference;
-import app.model.NotificationStatus;
+import app.model.EmailStatus;
 import app.repository.NotificationPreferenceRepository;
 import app.repository.NotificationRepository;
 import app.web.dto.NotificationRequest;
@@ -17,14 +17,14 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class NotificationService {
+public class EmailService {
 
     private final NotificationPreferenceRepository preferenceRepository;
     private final NotificationRepository notificationRepository;
     private final MailSender mailSender;
 
     @Autowired
-    public NotificationService(NotificationPreferenceRepository notificationPreferenceRepository, NotificationRepository notificationRepository, MailSender mailSender) {
+    public EmailService(NotificationPreferenceRepository notificationPreferenceRepository, NotificationRepository notificationRepository, MailSender mailSender) {
         this.preferenceRepository = notificationPreferenceRepository;
         this.notificationRepository = notificationRepository;
         this.mailSender = mailSender;
@@ -83,9 +83,9 @@ public class NotificationService {
 
         try{
             mailSender.send(message);
-            notification.setStatus(NotificationStatus.SUCCEEDED);
+            notification.setStatus(EmailStatus.SUCCEEDED);
         }catch (Exception e) {
-            notification.setStatus(NotificationStatus.FAILED);
+            notification.setStatus(EmailStatus.FAILED);
         }
 
         return notificationRepository.save(notification);

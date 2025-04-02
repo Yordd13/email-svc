@@ -1,6 +1,6 @@
 package app.web.dto;
 
-import app.model.NotificationStatus;
+import app.model.EmailStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,5 +20,5 @@ public class NotificationResponse {
 
     private LocalDateTime createdOn;
 
-    private NotificationStatus status;
+    private EmailStatus status;
 }
